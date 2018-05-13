@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  beat:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - ".:/code"
+    depends_on:
+      - broker
+
+  flower:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - ".:/code"
+    depends_on:
+      - broker
+    ports:
+      - 5555:5555
+    command: ["celery", "-A", "my_internet_speed", "flower"]
+
+  api:
+    env_file:
+      - .env
+    image: postgrest/postgrest
+    ports:
+      - 3000:3000
+
+  db:
+    image: postgres:10.3-alpine
+    env_file:
+      - .env
+    volumes:
+      - ./db:/var/lib/postgresql
+    ports:
+      - 5432:5432
+
+  broker:
+    image: redis:4.0.8-alpine
