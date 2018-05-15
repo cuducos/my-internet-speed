@@ -70,3 +70,14 @@ This spins up the periodic tasks as well as two other services so you can monito
 
 * [All speed test results](https://localhost:3000)
 * [All speed test tasks](https://localhost:5555)
+
+#### Troubleshooting
+
+##### `UnixHTTPConnectionPool(host='localhost', port=None): Read timed out.`
+
+I was getting this error in my Raspberry Pi when trying to run `docker-compose up`. This seams to be a workaround:
+
+```console
+$ export DOCKER_CLIENT_TIMEOUT=600
+$ export COMPOSE_HTTP_TIMEOUT=600
+```
