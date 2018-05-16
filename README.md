@@ -46,7 +46,7 @@ For example, if:
 * the measured speed is 20Mpbs
 * your `CONTRACT_SPEED` is `60`
 * the `THRESHOLD` is `0.4`
-* and `TWEET` is configures as  `I pay for {contract_speed}Mbps, but now @MyISP is working at {real_speed}Mbps – merely {percentage}% of what I'm paing for :( {result_url}`
+* and `TWEET` is configures as  `I pay for {contract_speed}Mbps, but now @MyISP is working at {real_speed}Mbps – merely {percentage}% of what I'm paying for :( {result_url}`
 
 The final tweet would be:
 
