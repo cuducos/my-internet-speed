@@ -1,4 +1,8 @@
-# My Internet Speed [![Maintainability](https://api.codeclimate.com/v1/badges/c27cfa7434a7196685bc/maintainability)](https://codeclimate.com/github/cuducos/my-internet-speed/maintainability)
+[![Tests](https://img.shields.io/travis/cuducos/my-internet-speed.svg)](https://travis-ci.org/cuducos/my-internet-speed)
+[![Coverage](https://img.shields.io/codeclimate/coverage/cuducos/my-internet-speed.svg)](https://codeclimate.com/github/cuducos/my-internet-speed)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/cuducos/my-internet-speed.svg)](https://codeclimate.com/github/cuducos/my-internet-speed)
+
+# My Internet Speed
 
 I wrote this app so I can **periodically** monitor my internet speed and:
 
@@ -59,9 +63,9 @@ For example, if:
 * the measured speed is 20Mpbs
 * your `CONTRACT_SPEED` is `60`
 * the `THRESHOLD` is `0.4`
-* and `TWEET` is configures as  `I pay for {contract_speed}Mbps, but now @MyISP
-  is working at {real_speed}Mbps – merely {percentage}% of what I'm paying for
-  :( {result_url}`
+* and `TWEET` is configures as  `I pay for {contract_speed}, but now @MyISP is
+  working at {real_speed} – merely {percentage} of what I'm paying for :(
+  {result_url}`
 
 The final tweet would be:
 

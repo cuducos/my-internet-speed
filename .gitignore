@@ -1,5 +1,7 @@
 *.pyc
+.coverage
 .env
+.pytest_cache/
 __pycache__/
 celerybeat*
 db/
