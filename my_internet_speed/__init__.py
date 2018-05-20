@@ -24,8 +24,10 @@ class SpeedTest:
         return Result.create(**data)
 
     def tweet(self):
-        if not settings.TWITTER or \
-                self.client.results.download >= settings.MINIMUM_SPEED:
+        if not settings.TWITTER:
+            return
+
+        if self.client.results.download >= settings.MINIMUM_SPEED:
             return
 
         return settings.TWITTER.PostUpdate(self.tweet_text)

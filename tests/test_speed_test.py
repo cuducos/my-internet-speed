@@ -38,6 +38,11 @@ def test_tweet_text(mocker, speed_test):
     assert speed_test.tweet_text == expected
 
 
+def test_it_does_not_tweet_when_there_is_no_credentials(mocker, speed_test):
+    mocker.patch('my_internet_speed.settings.TWITTER', new_callable=lambda: None)
+    assert speed_test.tweet() is None
+
+
 def test_it_tweets_when_speed_is_below_limit(mocker, speed_test):
     minimum_speed = lambda: 25 * 10 ** 6
     mocker.patch('my_internet_speed.settings.MINIMUM_SPEED', new_callable=minimum_speed)
