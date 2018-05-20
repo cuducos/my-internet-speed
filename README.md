@@ -119,3 +119,9 @@ up`. This seams to be a workaround:
 $ export DOCKER_CLIENT_TIMEOUT=600
 $ export COMPOSE_HTTP_TIMEOUT=600
 ```
+
+## Testing
+
+```console
+$ docker-compose run --rm beat py.test
+```
