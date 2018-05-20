@@ -22,7 +22,7 @@ CELERY_CONFIG = {'broker': REDIS_URL, 'timezone': TIMEZONE}
 CREDENTIALS = {
     'consumer_key': config('TWITTER_CONSUMER_KEY', default=None),
     'consumer_secret': config('TWITTER_CONSUMER_SECRET', default=None),
-    'access_token': config('TWITTER_ACCESS_TOKEN', default=None),
+    'access_token_key': config('TWITTER_ACCESS_TOKEN', default=None),
     'access_token_secret': config('TWITTER_ACCESS_TOKEN_SECRET', default=None)
 }
 TWITTER = Api(**CREDENTIALS) if all(CREDENTIALS.values()) else None
