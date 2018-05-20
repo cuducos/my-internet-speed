@@ -1,6 +1,6 @@
-![Tests](https://img.shields.io/travis/cuducos/my-internet-speed.svg)
-![Coverage](https://img.shields.io/codeclimate/coverage/cuducos/my-internet-speed.svg)
-![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/cuducos/my-internet-speed.svg)
+[![Tests](https://img.shields.io/travis/cuducos/my-internet-speed.svg)](https://travis-ci.org/cuducos/my-internet-speed)
+[![Coverage](https://img.shields.io/codeclimate/coverage/cuducos/my-internet-speed.svg)](https://codeclimate.com/github/cuducos/my-internet-speed)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/cuducos/my-internet-speed.svg)](https://codeclimate.com/github/cuducos/my-internet-speed)
 
 # My Internet Speed
 
