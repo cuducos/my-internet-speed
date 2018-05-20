@@ -25,7 +25,7 @@ CREDENTIALS = {
         'access_token': config('TWITTER_ACCESS_TOKEN', default=None),
         'access_token_secret': config('TWITTER_ACCESS_TOKEN_SECRET', default=None)
         }
-TWITTER= Api(**CREDENTIALS) if all(CREDENTIALS.values()) else None
+TWITTER = Api(**CREDENTIALS) if all(CREDENTIALS.values()) else None
 TWEET = config('TWEET')
 CONTRACT_SPEED = config('CONTRACT_SPEED', cast=lambda x: int(x) * 10 ** 6)
 MINIMUM_SPEED = config('THRESHOLD', cast=lambda x: Decimal(x) * CONTRACT_SPEED)
