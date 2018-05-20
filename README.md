@@ -1,4 +1,4 @@
-# My Internet Speed
+# My Internet Speed [![Maintainability](https://api.codeclimate.com/v1/badges/c27cfa7434a7196685bc/maintainability)](https://codeclimate.com/github/cuducos/my-internet-speed/maintainability)
 
 I wrote this app so I can **periodically** monitor my internet speed and:
 
