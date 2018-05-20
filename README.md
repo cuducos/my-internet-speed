@@ -54,7 +54,17 @@ The final tweet would be:
 
 If you like this app, add `#MyInternetSpeed https://github.com/cuducos/my-internet-speed` to your tweets ; )
 
-### Create the database table
+### Database
+
+This `docker-compose.yml` lefts out the `db` container from all possible `depends_on` in order to make it easier to use an external/remote database to persist data (just point `POSTGRES`s variables and the `PGRST` ones to somewhere else).
+
+Thus if you are using the Docker database it is useful to start it manually first:
+
+```console
+$ docker-compose up -d db
+```
+
+In both cases run this one off command to create the database tables:
 
 ```console
 $ docker-compose run --rm beat python -c "from my_internet_speed.models import Result; Result.create_table()"
