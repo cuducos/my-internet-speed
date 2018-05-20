@@ -1,0 +1,28 @@
+language: python
+python: 3.6
+services:
+  - postgresql
+  - redis-server
+
+env:
+  global:
+    - REDIS_URL=redis://localhost:6379/0
+    - POSTGRES_DB=myinternetspeed
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=
+    - POSTGRES_HOST=localhost
+    - POSTGRES_PORT=5432
+
+before_install:
+  - psql -c 'CREATE DATABASE myinternetspeed;' -U postgres
+  - pip install -U pip pipenv
+  - pipenv install --system --dev
+  - cp .env.sample .env
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+  - python -c "from my_internet_speed.models import Result; Result.create_table()"
+
+script:
+  - py.test --cov-report xml
+  - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
