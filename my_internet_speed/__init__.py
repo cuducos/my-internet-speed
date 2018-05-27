@@ -35,11 +35,13 @@ class SpeedTest:
     @property
     def tweet_text(self):
         percentage = self.client.results.download / settings.CONTRACT_SPEED
+        anatel = " - @anatel." if int(percentage) < 0.1 else ""
         return settings.TWEET.format(
             contract_speed=format_speed(settings.CONTRACT_SPEED),
             real_speed=format_speed(self.client.results.download),
             percentage=format_percentage(percentage),
-            result_url=self.result_url
+            result_url=self.result_url,
+            anatel=anatel
         )
 
 
