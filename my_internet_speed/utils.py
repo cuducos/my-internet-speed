@@ -3,7 +3,7 @@ def format_speed(speed):
     :param speed: (float) connection speed in bps
     :return: (str) speed in Mpbs
     """
-    return f'{speed / 10 ** 6:.0f}Mbps'
+    return f"{speed / 10 ** 6:.0f}Mbps"
 
 
 def format_percentage(percentage):
@@ -11,4 +11,4 @@ def format_percentage(percentage):
     :param value: (float) percentage
     :return: (str) Rounded percenatge (no decimals) in human-readable format
     """
-    return f'{percentage * 100:.0f}%'
+    return f"{percentage * 100:.0f}%"

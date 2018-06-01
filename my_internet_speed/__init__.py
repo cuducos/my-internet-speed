@@ -9,13 +9,12 @@ from my_internet_speed.utils import format_percentage, format_speed
 
 
 class SpeedTest:
-
     def __init__(self):
         self.client = Speedtest()
         self.client.get_best_server()
         self.client.download()
         self.client.upload()
-        self.result_url = re.sub(r'\.png$', '', self.client.results.share())
+        self.result_url = re.sub(r"\.png$", "", self.client.results.share())
 
     def save(self):
         result = self.client.results.dict()
@@ -39,11 +38,11 @@ class SpeedTest:
             contract_speed=format_speed(settings.CONTRACT_SPEED),
             real_speed=format_speed(self.client.results.download),
             percentage=format_percentage(percentage),
-            result_url=self.result_url
+            result_url=self.result_url,
         )
 
 
-app = Celery('my-internet-speed', **settings.CELERY_CONFIG)
+app = Celery("my-internet-speed", **settings.CELERY_CONFIG)
 
 
 @app.task
@@ -56,4 +55,4 @@ def speed_test():
 @app.on_after_finalize.connect
 def setup_scheduled_task(sender, **kwargs):
     task = speed_test.s()
-    sender.add_periodic_task(settings.INTERVAL, task, name='speed-test')
+    sender.add_periodic_task(settings.INTERVAL, task, name="speed-test")

@@ -125,3 +125,9 @@ $ export COMPOSE_HTTP_TIMEOUT=600
 ```console
 $ docker-compose run --rm beat py.test
 ```
+
+Also we use [Black](https://github.com/ambv/black) code formatter:
+
+```console
+$ docker-compose run --rm beat black . --check
+```

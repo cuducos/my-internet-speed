@@ -15,7 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     apt-get update && \
     apt-get -qq -y install apt-transport-https && \
     apt-get -qq -y install gcc libpq-dev python3-dev && \
-    pip install -U pip pipenv && \
+    pip install -U black pip pipenv && \
     pipenv install --dev --deploy --system && \
     apt-get -qq -y remove apt-transport-https gcc python3-dev && \
     apt-get -qq -y autoremove && \

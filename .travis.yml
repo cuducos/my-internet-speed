@@ -15,7 +15,7 @@ env:
 
 before_install:
   - psql -c 'CREATE DATABASE myinternetspeed;' -U postgres
-  - pip install -U pip pipenv
+  - pip install -U black pip pipenv
   - pipenv install --system --dev
   - cp .env.sample .env
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -24,5 +24,6 @@ before_install:
   - python -c "from my_internet_speed.models import Result; Result.create_table()"
 
 script:
+  - black . --check
   - py.test --cov-report xml
   - ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT
