@@ -4,4 +4,8 @@
 .pytest_cache/
 __pycache__/
 celerybeat*
+dashboard/build/
 db/
+elm-stuff/
+node_modules/
+repl-temp-*

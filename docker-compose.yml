@@ -10,6 +10,7 @@ services:
       - ".:/code"
     depends_on:
       - broker
+      - dashboard
 
   flower:
     build:
@@ -24,12 +25,22 @@ services:
       - 5555:5555
     command: ["celery", "-A", "my_internet_speed", "flower"]
 
+  dashboard:
+    build:
+      context: dashboard/
+    depends_on:
+      - api
+    volumes:
+      - "./dashboard:/code"
+    ports:
+      - 3000:3000
+
   api:
     env_file:
       - .env
     image: postgrest/postgrest
     ports:
-      - 3000:3000
+      - 3001:3000
 
   db:
     image: postgres:10.4

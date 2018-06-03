@@ -102,11 +102,19 @@ $ docker-compose run --rm beat python \
 $ docker-compose up -d
 ```
 
-This spins up the periodic tasks as well as two other services so you can
-monitor:
+#### Services
 
-* [All speed test results](https://localhost:3000)
-* [All speed test tasks](https://localhost:5555)
+This spins up different services that might be useful to check the status of
+the speed tests:
+
+* [`http://localhost:3000`: **Minimalist dashboard**](https://localhost:3000)
+  with monthly speed test results
+* [`http://localhost:3001/result`: **API to the database**](http://localhost:3001)
+  with all speed test results
+  (check [their docs](https://postgrest.org/en/v5.0/api.html) for advanced
+  filtering and exporting formats)
+* [`http://localhost:5555`: all speed test tasks](http://localhost:5555) via
+  [Flower](https://flower.readthedocs.io/)
 
 #### Troubleshooting
 
