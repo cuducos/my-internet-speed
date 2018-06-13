@@ -80,14 +80,14 @@ endMonth date =
 
 defaultUrl : String
 defaultUrl =
-    "http://0.0.0.0:3001/result"
+    "http://0.0.0.0:3001/result?order=timestamp.asc"
 
 
 filteredUrl : Model.Month -> Model.Month -> String
 filteredUrl start end =
     String.concat
         [ defaultUrl
-        , "?and=("
+        , "&and=("
         , "timestamp.gte."
         , start.year |> toString
         , "-"
