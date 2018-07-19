@@ -76,7 +76,7 @@ chartConfig model =
     , events = Events.hoverMany Hint
     , junk = Junk.hoverMany model.hinted formatTimestamp formatSpeed
     , grid = Grid.default
-    , area = Area.stacked 0.3
+    , area = Area.normal 0.3
     , line = Line.default
     , dots = Dots.default
     }
