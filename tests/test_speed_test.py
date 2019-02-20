@@ -1,59 +1,46 @@
 from my_internet_speed.models import Result
 
 
-def test_init(speed_test):
-    speed_test.client.get_best_server.assert_called_once_with()
-    speed_test.client.download.assert_called_once_with()
-    speed_test.client.upload.assert_called_once_with()
-    assert speed_test.result_url == "http://www.speedtest.net/result/42"
-
-
-def test_save(mocker, speed_test):
-    create = mocker.patch.object(Result, "create")
-    speed_test.save()
-    data = {
-        "download": speed_test.client.results.download,
-        "upload": speed_test.client.results.upload,
-        "ping": speed_test.client.results.ping,
-        "timestamp": speed_test.client.results.timestamp,
-        "bytes_sent": speed_test.client.results.bytes_sent,
-        "bytes_received": speed_test.client.results.bytes_received,
-        "server": speed_test.client.results.server,
-        "client": speed_test.client.results.client,
-    }
-    create.assert_called_once_with(**data)
-
-
-def test_tweet_text(mocker, speed_test):
-    tweet = (
-        "I pay for {contract_speed}, but now @MyISP is working at "
-        "{real_speed} – merely {percentage} of what I'm paying for :( "
-        "{result_url}"
+def test_run(speedtestnet):
+    results = speedtestnet.run()
+    expected = Result(
+        download=22_705_960.903_082_576,
+        upload=6_743_478.793_460_394,
+        ping=21.134,
+        timestamp="1970-01-01T00:00:00.000000Z",
+        bytes_sent=11_255_808,
+        bytes_received=28_753_668,
+        server={
+            "url": "http://example.com/speedtest/upload.php",
+            "lat": "-34.0098",
+            "lon": "-56.6573",
+            "name": "Nowhere",
+            "country": "Earth",
+            "cc": "XX",
+            "sponsor": "Example Inc.",
+            "id": "42",
+            "url2": "http://alt.example.com/speedtest/upload.php",
+            "host": "example.com:8001",
+            "d": 3.141_592_653_589_793_2,
+            "latency": 31.415,
+        },
+        client={
+            "ip": "192.168.0.1",
+            "lat": "-36.4679",
+            "lon": "-39.3789",
+            "isp": "Live, universe and everything",
+            "isprating": "4.2",
+            "rating": "0",
+            "ispdlavg": "0",
+            "ispulavg": "0",
+            "loggedin": "0",
+            "country": "XX",
+        },
+        url="http://www.speedtest.net/result/42",
     )
-    expected = (
-        "I pay for 60Mbps, but now @MyISP is working at 23Mbps – merely 38% "
-        "of what I'm paying for :( http://www.speedtest.net/result/42"
-    )
-    mocker.patch("my_internet_speed.settings.TWEET", new_callable=lambda: tweet)
-    assert speed_test.tweet_text == expected
 
-
-def test_it_does_not_tweet_when_there_is_no_credentials(mocker, speed_test):
-    mocker.patch("my_internet_speed.settings.TWITTER", new_callable=lambda: None)
-    assert speed_test.tweet() is None
-
-
-def test_it_tweets_when_speed_is_below_limit(mocker, speed_test):
-    minimum_speed = lambda: 25 * 10 ** 6
-    mocker.patch("my_internet_speed.settings.MINIMUM_SPEED", new_callable=minimum_speed)
-    twitter = mocker.patch("my_internet_speed.settings.TWITTER")
-    speed_test.tweet()
-    twitter.PostUpdate.assert_called_once_with(speed_test.tweet_text)
-
-
-def test_does_not_tweet_when_speed_is_above_limit(mocker, speed_test):
-    minimum_speed = lambda: 20 * 10 ** 6
-    mocker.patch("my_internet_speed.settings.MINIMUM_SPEED", new_callable=minimum_speed)
-    twitter = mocker.patch("my_internet_speed.settings.TWITTER")
-    speed_test.tweet()
-    twitter.PostUpdate.assert_not_called()
+    speedtestnet.client.get_best_server.assert_called_once_with()
+    speedtestnet.client.download.assert_called_once_with()
+    speedtestnet.client.upload.assert_called_once_with()
+    for field in Result._meta.fields.keys():
+        assert getattr(expected, field) == getattr(results, field)

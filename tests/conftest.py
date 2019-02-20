@@ -1,17 +1,19 @@
 import pytest
 
-from my_internet_speed import SpeedTest
+from my_internet_speed.backends.speedtestnet import SpeedTest
 
 
-class SpeedTestResult:
-    def __init__(self):
-        self.download = 22705960.903082576
-        self.upload = 6743478.793460394
-        self.ping = 21.134
-        self.timestamp = "1970-01-01T00:00:00.000000Z"
-        self.bytes_sent = 11255808
-        self.bytes_received = 28753668
-        self.server = {
+@pytest.fixture
+def speedtestnet(mocker):
+    share = f"http://www.speedtest.net/result/42.png"
+    results = {
+        "download": 22_705_960.903_082_576,
+        "upload": 6_743_478.793_460_394,
+        "ping": 21.134,
+        "timestamp": "1970-01-01T00:00:00.000000Z",
+        "bytes_sent": 11_255_808,
+        "bytes_received": 28_753_668,
+        "server": {
             "url": "http://example.com/speedtest/upload.php",
             "lat": "-34.0098",
             "lon": "-56.6573",
@@ -22,10 +24,10 @@ class SpeedTestResult:
             "id": "42",
             "url2": "http://alt.example.com/speedtest/upload.php",
             "host": "example.com:8001",
-            "d": 3.1415926535897932,
+            "d": 3.141_592_653_589_793_2,
             "latency": 31.415,
-        }
-        self.client = {
+        },
+        "client": {
             "ip": "192.168.0.1",
             "lat": "-36.4679",
             "lon": "-39.3789",
@@ -36,26 +38,9 @@ class SpeedTestResult:
             "ispulavg": "0",
             "loggedin": "0",
             "country": "XX",
-        }
-
-    def share(self):
-        return f"http://www.speedtest.net/result/42.png"
-
-    def dict(self):
-        return dict(
-            download=self.download,
-            upload=self.upload,
-            ping=self.ping,
-            timestamp=self.timestamp,
-            bytes_sent=self.bytes_sent,
-            bytes_received=self.bytes_received,
-            server=self.server,
-            client=self.client,
-        )
-
-
-@pytest.fixture
-def speed_test(mocker):
-    mock = mocker.patch("my_internet_speed.Speedtest")
-    mock.return_value.results = SpeedTestResult()
+        },
+    }
+    mock = mocker.patch("my_internet_speed.backends.speedtestnet.Speedtest")
+    mock.return_value.results.dict.return_value = results
+    mock.return_value.results.share.return_value = share
     return SpeedTest()
