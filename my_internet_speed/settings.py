@@ -30,4 +30,4 @@ TWEET = config("TWEET")
 CONTRACT_SPEED = config("CONTRACT_SPEED", cast=lambda x: int(x) * 10 ** 6)
 MINIMUM_SPEED = config("THRESHOLD", cast=lambda x: Decimal(x) * CONTRACT_SPEED)
 
-BACKEND = config("BACKEND", default="speedtestnet")
+BACKEND = config("BACKEND", default="speed_test_net")

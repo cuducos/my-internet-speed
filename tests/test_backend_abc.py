@@ -51,7 +51,7 @@ def test_it_does_not_tweet_when_there_is_no_credentials(mocker):
     assert speed_test.tweet(result) is None
 
 
-def test_it_tweets_when_speed_is_below_limit(mocker, speedtestnet):
+def test_it_tweets_when_speed_is_below_limit(mocker, speed_test_net):
     minimum = lambda: 25 * 10 ** 6
     mocker.patch("my_internet_speed.settings.MINIMUM_SPEED", new_callable=minimum)
     twitter = mocker.patch("my_internet_speed.settings.TWITTER")
@@ -62,7 +62,7 @@ def test_it_tweets_when_speed_is_below_limit(mocker, speedtestnet):
     twitter.PostUpdate.assert_called_once_with(speed_test.tweet_text(results))
 
 
-def test_does_not_tweet_when_speed_is_above_limit(mocker, speedtestnet):
+def test_does_not_tweet_when_speed_is_above_limit(mocker, speed_test_net):
     minimum = lambda: 20 * 10 ** 6
     mocker.patch("my_internet_speed.settings.MINIMUM_SPEED", new_callable=minimum)
     twitter = mocker.patch("my_internet_speed.settings.TWITTER")
