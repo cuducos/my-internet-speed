@@ -12,7 +12,10 @@ peewee = "*"
 "psycopg2-binary" = "*"
 python-decouple = "*"
 python-twitter = "*"
+requests = "*"
+selenium = "*"
 speedtest-cli = "*"
+splinter = "*"
 
 [dev-packages]
 flower = "*"

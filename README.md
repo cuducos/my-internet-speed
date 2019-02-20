@@ -14,15 +14,15 @@ I wrote this app so I can **periodically** monitor my internet speed and:
 * Check all speed test results in a web API
 * Monitor all speed test tasks
 
-At home this runs on my Raspberry Pi.
+At home this runs on my Raspberry Pi, but not all services are compatible.
 
 ## Installing
 
 ### Requirements
 
 **It is important** to run this app in a computer connected to the internet via
-ethernet cable, **not via wireless** – this is the way to have a good accuracy
-in testing the speed.
+ethernet cable, **not via wireless** – this is the way to have some accuracy in
+testing the speed.
 
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
@@ -36,6 +36,11 @@ when the speed is below the configures threshold):
 You can get these Twitter credentials at the [Twitter Application Management
 dashboard](https://apps.twitter.com/).
 
+Some speed test backends do not provide a URL with the results. In these cases
+we take a screenshot from the speed test result and upload it to
+[Imgur](https://imgur.com/). If you want to use this feature, you need an
+account there and a client ID for a registered application.
+
 ### Settings
 
 Before you get started, copy `.env.sample` as `.env` and edit as follows:
@@ -43,6 +48,12 @@ Before you get started, copy `.env.sample` as `.env` and edit as follows:
 1. Set `INTERVAL` according to how often (in minutes) you want to run the speed
    test (e.g.: `20` for _20min_)
 1. Set your `TIMEZONE` accordingly
+
+The default speed test backend is [SpeedTest](https://speedtest.net) but you
+can use
+[EAQ (Entidade Aferidora da Qualidade de Banda Larga)](http://www.brasilbandalarga.com.br/)
+certified by [ANATEL](https://www.anatel.gov.br/) setting `BACKEND` to
+`brasil_banda_larga`.
 
 If you want the app to post tweets:
 
@@ -55,8 +66,8 @@ If you want the app to post tweets:
    Mbps should be (for example, `60` for _60Mbps_), `{real_speed}` where the
    measured speed should be, and `{percentage}` where comparing both should be
    (feel free to use the Twitter handle of your ISP too)
-1. Add `{result_url}` in order to add the link to the result provided by
-   [SpeedTest](https://speedtest.net)
+1. Add `{result_url}` in order to add the link to the result provided by the
+   speed test backend
 
 For example, if:
 
@@ -102,19 +113,29 @@ $ docker-compose run --rm beat python \
 $ docker-compose up -d
 ```
 
-#### Services
+#### Services and compatibility
+
+##### Containers
 
 This spins up different services that might be useful to check the status of
 the speed tests:
 
-* [`http://localhost:3000`: **Minimalist dashboard**](https://localhost:3000)
-  with monthly speed test results
-* [`http://localhost:3001/result`: **API to the database**](http://localhost:3001)
-  with all speed test results
-  (check [their docs](https://postgrest.org/en/v5.0/api.html) for advanced
-  filtering and exporting formats)
-* [`http://localhost:5555`: all speed test tasks](http://localhost:5555) via
-  [Flower](https://flower.readthedocs.io/)
+| Name | URL |  ARM (RaspberryPi) compatibility | Description |
+|:-----|:----|:--------------------------------:|:------------|
+| `beat` | | ✅ | Main app that periodically runs the speed tests |
+| `dashboard` | `http://localhost:3000/` | 🚫 | Minimalist dashboard with monthly speed test results |
+| `api` | `http://localhost:3001/result/` | 🚫 | API to the database with all speed test results (check [Postgrest](https://postgrest.org/en/v5.0/api.html) for advanced filtering and exporting formats) |
+| `flower` | `http://localhost:5555/` | ✅ | [Flower](https://flower.readthedocs.io/) dashboard for asynchronous tasks |
+| `db` | | ✅ | Database to store the speed test results |
+| `broker` | | ✅ | Queue to run the speed tests |
+| `chrome` | | 🚫 | Selenium web driver used for backends that requires a browser |
+
+##### Backends
+
+| Name | Python path | ARM (RaspberryPi) compatibility |
+|:-----|:------------|:-------------------------------:|
+| [SpeedTest](https://speedtest.net/) | `my_internet_speed.backends.speed_test_net.SpeedTest` | ✅ |
+| [Barsil Banda Larga](http://www.brasilbandalarga.com.br/) | `my_internet_speed.backends.brasil_banda_larga.SpeedTest` | 🚫 |
 
 #### Troubleshooting
 

@@ -30,4 +30,7 @@ TWEET = config("TWEET")
 CONTRACT_SPEED = config("CONTRACT_SPEED", cast=lambda x: int(x) * 10 ** 6)
 MINIMUM_SPEED = config("THRESHOLD", cast=lambda x: Decimal(x) * CONTRACT_SPEED)
 
+SELENIUM_DRIVE_URL = config("SELENIUM_DRIVE_URL", default="http://chrome:4444/wd/hub")
+IMGUR_CLIENT_ID = config("IMGUR_CLIENT_ID", default=None)
+
 BACKEND = config("BACKEND", default="speed_test_net")
