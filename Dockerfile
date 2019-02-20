@@ -1,4 +1,4 @@
-FROM python:3.6.5-slim
+FROM python:3.7.2-slim
 
 WORKDIR /code
 ADD Pipfile Pipfile
@@ -15,7 +15,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
     apt-get update && \
     apt-get -qq -y install apt-transport-https && \
     apt-get -qq -y install gcc libpq-dev python3-dev && \
-    pip install -U black pip pipenv && \
+    pip install -U pip && \
+    pip install -U black pipenv && \
     pipenv install --dev --deploy --system && \
     apt-get -qq -y remove apt-transport-https gcc python3-dev && \
     apt-get -qq -y autoremove && \

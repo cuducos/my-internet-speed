@@ -4,14 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
 
 [packages]
 "celery[redis]" = "*"
 peewee = "*"
+"psycopg2-binary" = "*"
 python-decouple = "*"
 python-twitter = "*"
-"psycopg2-binary" = "*"
 speedtest-cli = "*"
 
 [dev-packages]
