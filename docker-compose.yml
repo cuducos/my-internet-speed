@@ -10,7 +10,6 @@ services:
       - ".:/code"
     depends_on:
       - broker
-      - dashboard
 
   flower:
     build:
@@ -43,13 +42,16 @@ services:
       - 3001:3000
 
   db:
-    image: postgres:10.4
+    image: postgres:11.2
     env_file:
       - .env
     volumes:
       - ./db:/var/lib/postgresql
-    ports:
-      - 5432:5432
 
   broker:
-    image: redis:4.0.9
+    image: redis:5.0.3
+
+  chrome:
+    image: selenium/standalone-chrome
+    ports:
+      - 5900:5900

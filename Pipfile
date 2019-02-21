@@ -9,10 +9,13 @@ python_version = "3.6"
 [packages]
 "celery[redis]" = "*"
 peewee = "*"
+"psycopg2-binary" = "*"
 python-decouple = "*"
 python-twitter = "*"
-"psycopg2-binary" = "*"
+requests = "*"
+selenium = "*"
 speedtest-cli = "*"
+splinter = "*"
 
 [dev-packages]
 flower = "*"
