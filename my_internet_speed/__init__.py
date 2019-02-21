@@ -1,15 +1,17 @@
+from importlib import import_module
+
 from celery import Celery
 
-from my_internet_speed import backends, settings
+from my_internet_speed import settings
 
 
 app = Celery("my-internet-speed", **settings.CELERY_CONFIG)
-SpeedTest = __import__("my_internet_speed.backends", f"{settings.BACKEND}.SpeedTest")
+backend = import_module(f"my_internet_speed.backends.{settings.BACKEND}")
 
 
 @app.task
 def speed_test():
-    speed_test = SpeedTest()
+    speed_test = backend.SpeedTest()
     speed_test()
 
 

@@ -4,7 +4,7 @@ from my_internet_speed import setup_scheduled_task, speed_test
 
 
 def test_speed_test_task(mocker):
-    speed_test_mock = mocker.patch("my_internet_speed.SpeedTest")
+    speed_test_mock = mocker.patch("my_internet_speed.backend.SpeedTest")
     speed_test()
     speed_test_mock.assert_called_once_with()
     speed_test_mock.return_value.assert_called_once_with()
