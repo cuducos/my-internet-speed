@@ -1,4 +1,4 @@
-FROM python:3.7.2-slim
+FROM python:3.6.8-slim
 
 WORKDIR /code
 ADD Pipfile Pipfile
