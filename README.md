@@ -14,7 +14,9 @@ I wrote this app so I can **periodically** monitor my internet speed and:
 * Check all speed test results in a web API
 * Monitor all speed test tasks
 
-At home this runs on my Raspberry Pi, but not all services are compatible.
+At home this runs on my Raspberry Pi, but not all services are compatible —
+check [my ideal setup](#my-ideal-setup) for a suggestion on how to run these
+services.
 
 ## Installing
 
@@ -136,6 +138,19 @@ the speed tests:
 |:-----|:------------|:-------------------------------:|
 | [SpeedTest](https://speedtest.net/) | `my_internet_speed.backends.speed_test_net.SpeedTest` | ✅ |
 | [Barsil Banda Larga](http://www.brasilbandalarga.com.br/) | `my_internet_speed.backends.brasil_banda_larga.SpeedTest` | 🚫 |
+
+#### My ideal setup
+
+Given the ARM processor incompatibilities, I actually use three computers to
+run these services:
+
+1. In my **RaspberryPi** (ARM processor, but it is still the only device with
+ethernet cable I have) I run `beat`, `broker` and `flower`:<br>
+`$ docker-compose up -d beat flower`
+2. In my **main computer** (x86 processor) I run the `api` and the `dashboard`
+so I can check the results:<br>`$ docker-compose up -d beat dashboard`
+3. The database I run **in the cloud**, a free tier at _tiny turtle_ (free) at
+[ElephantSQL](https://www.elephantsql.com/)
 
 #### Troubleshooting
 
