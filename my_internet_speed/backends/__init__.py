@@ -44,5 +44,5 @@ class SpeedTestBase(metaclass=ABCMeta):
 
     def __call__(self):
         results = self.run()
-        results.create()
+        results.save()
         self.tweet(results)

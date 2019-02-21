@@ -82,5 +82,5 @@ def test_call(mocker):
     speed_test = SpeedTest()
     speed_test()
     run.assert_called_once_with()
-    result.create.assert_called_once_with()
+    result.save.assert_called_once_with()
     tweet.assert_called_once_with(result)
