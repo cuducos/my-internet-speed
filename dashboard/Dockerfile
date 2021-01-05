@@ -9,6 +9,7 @@ RUN apt-get update && \
     npm install -g --unsafe-perm create-elm-app@1.10.4 && \
     elm package install --yes && \
     apt-get purge -y netbase && \
+    echo "tcp 6 TCP # transmission control protocol" > /etc/protocols && \
     rm -rf /var/lib/apt/lists/*
 
 CMD ["elm-app", "start"]
